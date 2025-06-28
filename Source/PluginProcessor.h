@@ -54,7 +54,6 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     //==============================================================================
-    //double rawVolume;
 
     juce::AudioProcessorValueTreeState apvts;
     std::atomic<float>* gainParam = nullptr;

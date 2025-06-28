@@ -1,7 +1,5 @@
 Gain Plugin TODO:
 - Peak display
-- db label on slider value
-- Gain label on knob
 - Clipping light
 - GUI graphics
-- Saving state
+- Type desired gain in slider value label
