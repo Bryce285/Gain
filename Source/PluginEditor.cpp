@@ -51,7 +51,18 @@ void GainAudioProcessorEditor::paint (juce::Graphics& g)
 
     g.setColour(juce::Colours::white);
     g.setFont(20.0f);
-    g.drawText("Peak: " + juce::String(peakDisplay, 2) + " db", getLocalBounds(), juce::Justification::bottomLeft, true);
+
+    // TODO: Reset peak level and clip value on user click
+    if (peakDisplay == -100.0f) {
+        g.drawText("Peak: -inf db", getLocalBounds(), juce::Justification::bottomLeft, true);
+    }
+    else {
+        g.drawText("Peak: " + juce::String(peakDisplay, 2) + " db", getLocalBounds(), juce::Justification::bottomLeft, true);
+    }
+
+    if (audioProcessor.isClipping) {
+        g.drawText("CLIP", getLocalBounds(), juce::Justification::bottomRight, true);
+    }
 }
 
 void GainAudioProcessorEditor::resized()

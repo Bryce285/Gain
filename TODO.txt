@@ -1,5 +1,4 @@
 Gain Plugin TODO:
-- Peak display
-- Clipping light
 - GUI graphics
 - Type desired gain in slider value label
+- Allow user reset of peak and clip values

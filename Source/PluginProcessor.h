@@ -59,6 +59,7 @@ public:
     std::atomic<float>* gainParam = nullptr;
     
     std::atomic<float> currentPeak = 0.0f;
+    std::atomic<bool> isClipping = false;
 
 private:
     //==============================================================================

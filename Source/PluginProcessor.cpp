@@ -174,6 +174,10 @@ void GainAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
     if (peak > currentPeak.load()) {
         currentPeak.store(peak);
     }
+
+    if (peak > 1.0f) {
+        isClipping = true;
+    }
 }
 
 //==============================================================================
