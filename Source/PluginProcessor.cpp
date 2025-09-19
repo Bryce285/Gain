@@ -157,17 +157,22 @@ void GainAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
     // interleaved by keeping the same state.
 
     float gainValue = juce::Decibels::decibelsToGain(gainParam->load());
+    float peak = 0.0f;
 
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
-        auto* channelData = buffer.getWritePointer (channel);
-
-        // ..do something to the data...
+        auto* channelData = buffer.getWritePointer(channel);
+        auto* channelReadData = buffer.getReadPointer(channel);
 
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
 
             channelData[sample] *= gainValue;
+            peak = std::max(peak, std::abs(channelReadData[sample]));
         }
+    }
+
+    if (peak > currentPeak.load()) {
+        currentPeak.store(peak);
     }
 }
 

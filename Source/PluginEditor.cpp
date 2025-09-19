@@ -15,8 +15,10 @@ GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 450);
+    setSize (400, 500);
+    startTimer(50);
 
+    // Setting up slider and slider label
     gainSlider.setSliderStyle(juce::Slider::Rotary);
     gainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 70, 20);
     gainSlider.setTextValueSuffix(" db");
@@ -35,10 +37,21 @@ GainAudioProcessorEditor::~GainAudioProcessorEditor()
 }
 
 //==============================================================================
+void GainAudioProcessorEditor::timerCallback()
+{
+    peakDisplay = juce::Decibels::gainToDecibels(audioProcessor.currentPeak.load());
+    repaint();
+}
+
+//==============================================================================
 void GainAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+
+    g.setColour(juce::Colours::white);
+    g.setFont(20.0f);
+    g.drawText("Peak: " + juce::String(peakDisplay, 2) + " db", getLocalBounds(), juce::Justification::bottomLeft, true);
 }
 
 void GainAudioProcessorEditor::resized()
