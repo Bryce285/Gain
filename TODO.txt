@@ -1,4 +1,2 @@
 Gain Plugin TODO:
 - GUI graphics
-- Type desired gain in slider value label
-- Allow user reset of peak and clip values

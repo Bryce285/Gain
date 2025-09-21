@@ -24,6 +24,7 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
+    void mouseDown(const juce::MouseEvent& e) override;
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -35,6 +36,8 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> gainSliderAttachment;
 
     juce::Label gainLabel;
+    juce::Label peakLabel;
+    juce::Label clipWarning;
 
     float peakDisplay = 0.0f;
 
