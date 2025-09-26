@@ -18,6 +18,7 @@ GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
     setSize (400, 450);
     startTimer(25);
 
+    gainSlider.setLookAndFeel(&customLnF);
     gainSlider.setSliderStyle(juce::Slider::Rotary);
     gainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 70, 20);
     gainSlider.setTextValueSuffix(" dB");
@@ -44,6 +45,7 @@ GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
 
 GainAudioProcessorEditor::~GainAudioProcessorEditor()
 {
+    gainSlider.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -88,7 +90,7 @@ void GainAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 
-    gainSlider.setBounds(0, 35, 400, 400);
+    gainSlider.setBounds(50, 50, 300, 325);
 
     // TODO: Make these centered in editor window
     peakLabel.setBounds(10, 10, 100, 20);

@@ -1,2 +1,3 @@
 Gain Plugin TODO:
-- GUI graphics
+- Update graphics
+- In/Out meters
