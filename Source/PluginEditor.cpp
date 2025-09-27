@@ -31,14 +31,17 @@ GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
     gainLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(gainLabel);
 
-    peakLabel.setText("Peak: -inf dB", juce::dontSendNotification);
-    peakLabel.setJustificationType(juce::Justification::centred);
+    peakHeader.setText("Peak", juce::dontSendNotification);
+    peakHeader.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(peakHeader);
+
+    peakLabel.setText("-inf dB", juce::dontSendNotification);
+    peakLabel.setJustificationType(juce::Justification::centredBottom);
     peakLabel.addMouseListener(this, true);
     addAndMakeVisible(peakLabel);
 
-    clipWarning.setText("CLIP", juce::dontSendNotification);
-    clipWarning.setJustificationType(juce::Justification::centred);
-    clipWarning.setColour(juce::Label::textColourId, juce::Colours::dimgrey);
+    clipWarning.setText("Clip", juce::dontSendNotification);
+    clipWarning.setJustificationType(juce::Justification::centredTop);
     clipWarning.addMouseListener(this, true);
     addAndMakeVisible(clipWarning);
 }
@@ -65,14 +68,49 @@ void GainAudioProcessorEditor::paint (juce::Graphics& g)
     g.setFont(20.0f);
 
     if (peakDisplay == -100.0f) {
-        peakLabel.setText("Peak: -inf dB", juce::dontSendNotification);
+        peakLabel.setText("-inf dB", juce::dontSendNotification);
     }
     else {
-        peakLabel.setText("Peak: " + juce::String(peakDisplay, 2) + " dB", juce::dontSendNotification);
+        peakLabel.setText(juce::String(peakDisplay, 2) + " dB", juce::dontSendNotification);
     }
 
+    auto clipLEDBounds = juce::Rectangle<float>(317, 414, 15, 15);
+    float ledDiameter = 15.0f;
+    juce::Rectangle<float> ledArea(clipLEDBounds.getCentreX() - ledDiameter * 0.5f,
+        clipLEDBounds.getCentreY() - ledDiameter * 0.5f,
+        ledDiameter, ledDiameter);
+    bool ledOn;
+
     if (audioProcessor.isClipping) {
-        clipWarning.setColour(juce::Label::textColourId, juce::Colours::red);
+        ledOn = true;
+    }
+    else {
+        ledOn = false;
+    }
+
+    juce::Colour ledColour = ledOn ? juce::Colours::red : juce::Colours::darkgrey;
+
+    if (ledOn) {
+        // Glow layer
+        g.setColour(ledColour.withAlpha(0.3f));
+        g.fillEllipse(ledArea.expanded(4.0f));
+
+        // Base layer
+        g.setColour(ledColour);
+        g.fillEllipse(ledArea);
+
+        // Outline layer
+        g.setColour(juce::Colours::black);
+        g.drawEllipse(ledArea, 1.0f);
+    }
+    else {
+        // Base layer
+        g.setColour(ledColour);
+        g.fillEllipse(ledArea);
+
+        // Outline layer
+        g.setColour(juce::Colours::black);
+        g.drawEllipse(ledArea, 1.0f);
     }
 }
 
@@ -80,7 +118,6 @@ void GainAudioProcessorEditor::mouseDown(const juce::MouseEvent& e)
 {
     if (e.eventComponent == &peakLabel || e.eventComponent == &clipWarning) {
         audioProcessor.isClipping = false;
-        clipWarning.setColour(juce::Label::textColourId, juce::Colours::dimgrey);
         audioProcessor.currentPeak.store(0.0f);
     }
 }
@@ -91,8 +128,7 @@ void GainAudioProcessorEditor::resized()
     // subcomponents in your editor..
 
     gainSlider.setBounds(50, 50, 300, 325);
-
-    // TODO: Make these centered in editor window
-    peakLabel.setBounds(10, 10, 100, 20);
-    clipWarning.setBounds(330, 10, 80, 20);
+    peakHeader.setBounds(50, 390, 50, 20);
+    peakLabel.setBounds(50, 395, 50, 35);
+    clipWarning.setBounds(300, 390, 50, 35);
 }

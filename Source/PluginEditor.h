@@ -27,13 +27,19 @@ public:
         auto bounds = juce::Rectangle<float>(x, y, diameter, diameter).reduced(25);
         auto reducedRadius = (diameter / 2.0f) - 15;
         auto center = bounds.getCentre();
+        auto rotaryCenterAngle = (rotaryStartAngle + rotaryEndAngle) / 2;
 
         g.setColour(juce::Colours::darkgrey);
         g.fillEllipse(bounds);
 
+        juce::Path backgroundArc;
+        backgroundArc.addCentredArc(center.x, center.y, reducedRadius, reducedRadius, 0.0f, rotaryStartAngle, rotaryEndAngle, true);
+        g.setColour(juce::Colours::darkslategrey);
+        g.strokePath(backgroundArc, juce::PathStrokeType(10.0f));
+
         juce::Path arc;
         auto angle = rotaryStartAngle + sliderPosProportional * (rotaryEndAngle - rotaryStartAngle);
-        arc.addCentredArc(center.x, center.y, reducedRadius, reducedRadius, 0.0f, rotaryStartAngle, angle, true);
+        arc.addCentredArc(center.x, center.y, reducedRadius, reducedRadius, 0.0f, rotaryCenterAngle, angle, true);
         g.setColour(juce::Colours::orange);
         g.strokePath(arc, juce::PathStrokeType(4.0f));
 
@@ -67,10 +73,12 @@ private:
     juce::Slider gainSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> gainSliderAttachment;
     CustomLnF customLnF;
-
+    
     juce::Label gainLabel;
+    juce::Label peakHeader;
     juce::Label peakLabel;
     juce::Label clipWarning;
+    juce::Component clipLED;
 
     float peakDisplay = 0.0f;
 
