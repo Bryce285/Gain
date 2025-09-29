@@ -34,13 +34,13 @@ public:
 
         juce::Path backgroundArc;
         backgroundArc.addCentredArc(center.x, center.y, reducedRadius, reducedRadius, 0.0f, rotaryStartAngle, rotaryEndAngle, true);
-        g.setColour(juce::Colours::darkslategrey);
+        g.setColour(juce::Colour(0xFF3B3B3B));
         g.strokePath(backgroundArc, juce::PathStrokeType(10.0f));
 
         juce::Path arc;
         auto angle = rotaryStartAngle + sliderPosProportional * (rotaryEndAngle - rotaryStartAngle);
         arc.addCentredArc(center.x, center.y, reducedRadius, reducedRadius, 0.0f, rotaryCenterAngle, angle, true);
-        g.setColour(juce::Colours::orange);
+        g.setColour(juce::Colour(0xFFFEB204));
         g.strokePath(arc, juce::PathStrokeType(4.0f));
 
         juce::Path p;
@@ -78,7 +78,6 @@ private:
     juce::Label peakHeader;
     juce::Label peakLabel;
     juce::Label clipWarning;
-    juce::Component clipLED;
 
     float peakDisplay = 0.0f;
 

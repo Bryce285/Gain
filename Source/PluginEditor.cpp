@@ -35,7 +35,7 @@ GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
     peakHeader.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(peakHeader);
 
-    peakLabel.setText("-inf dB", juce::dontSendNotification);
+    peakLabel.setText("-Inf dB", juce::dontSendNotification);
     peakLabel.setJustificationType(juce::Justification::centredBottom);
     peakLabel.addMouseListener(this, true);
     addAndMakeVisible(peakLabel);
@@ -62,13 +62,13 @@ void GainAudioProcessorEditor::timerCallback()
 void GainAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll (juce::Colour(0xFF222222));
 
     g.setColour(juce::Colours::white);
     g.setFont(20.0f);
 
     if (peakDisplay == -100.0f) {
-        peakLabel.setText("-inf dB", juce::dontSendNotification);
+        peakLabel.setText("-Inf dB", juce::dontSendNotification);
     }
     else {
         peakLabel.setText(juce::String(peakDisplay, 2) + " dB", juce::dontSendNotification);
