@@ -3,6 +3,10 @@
 <JUCERPROJECT id="daBN2Y" name="Gain" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
   <MAINGROUP id="C8qO7z" name="Gain">
+    <GROUP id="{BAF66BA5-0EBE-B60D-4906-58024E785363}" name="Resources">
+      <FILE id="SIRBDj" name="MoonGlossDisplayMedium.otf" compile="0" resource="1"
+            file="Resources/MoonGlossDisplayMedium.otf"/>
+    </GROUP>
     <GROUP id="{7F59574A-F6BF-083B-C68E-5786FD397549}" name="Source">
       <FILE id="wimOrj" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

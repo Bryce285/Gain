@@ -40,7 +40,7 @@ public:
         juce::Path arc;
         auto angle = rotaryStartAngle + sliderPosProportional * (rotaryEndAngle - rotaryStartAngle);
         arc.addCentredArc(center.x, center.y, reducedRadius, reducedRadius, 0.0f, rotaryCenterAngle, angle, true);
-        g.setColour(juce::Colour(0xFF66B2B2));
+        g.setColour(juce::Colour(0xFF0EA7B5));
         g.strokePath(arc, juce::PathStrokeType(4.0f));
 
         juce::Path p;
@@ -50,6 +50,29 @@ public:
         p.applyTransform(juce::AffineTransform::rotation(angle).translated(bounds.getCentreX(), bounds.getCentreY()));
         g.fillPath(p);
     }
+
+    CustomLnF()
+    {
+        juce::FontOptions typeface = juce::Typeface::createSystemTypefaceFor(
+            BinaryData::MoonGlossDisplayMedium_otf,
+            BinaryData::MoonGlossDisplayMedium_otfSize
+        );
+
+        moonGloss = juce::Font(typeface).withHeight(14.0f);
+    }
+
+    juce::Font getLabelFont(juce::Label& label) override
+    {
+        return moonGloss;
+    }
+
+    juce::Font getFont()
+    {
+        return moonGloss;
+    }
+
+private:
+    juce::Font moonGloss;
 };
 
 class GainAudioProcessorEditor : public juce::AudioProcessorEditor,
@@ -79,7 +102,7 @@ private:
     juce::Label peakLabel;
     juce::Label clipWarning;
 
-    int textColour = 0xFF999999;
+    int textColour = 0xFFADB5BD;
 
     float peakDisplay = 0.0f;
 

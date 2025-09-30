@@ -13,6 +13,7 @@
 GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
+
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 450);
@@ -33,11 +34,13 @@ GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
     gainLabel.attachToComponent(&gainSlider, false);
     gainLabel.setJustificationType(juce::Justification::centred);
     gainLabel.setColour(juce::Label::textColourId, juce::Colour(textColour));
+    gainLabel.setFont(customLnF.getFont());
     addAndMakeVisible(gainLabel);
 
     peakHeader.setText("Peak", juce::dontSendNotification);
     peakHeader.setJustificationType(juce::Justification::centred);
     peakHeader.setColour(juce::Label::textColourId, juce::Colour(textColour));
+    peakHeader.setFont(customLnF.getFont());
     addAndMakeVisible(peakHeader);
 
     peakLabel.setText("-Inf dB", juce::dontSendNotification);
@@ -45,12 +48,14 @@ GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
     peakLabel.addMouseListener(this, true);
     peakLabel.setColour(juce::Label::textColourId, juce::Colour(textColour));
     peakLabel.setColour(juce::Label::backgroundColourId, juce::Colour(0xFF141414));
+    peakLabel.setFont(customLnF.getFont());
     addAndMakeVisible(peakLabel);
 
     clipWarning.setText("Clip", juce::dontSendNotification);
     clipWarning.setJustificationType(juce::Justification::centredTop);
     clipWarning.addMouseListener(this, true);
     clipWarning.setColour(juce::Label::textColourId, juce::Colour(textColour));
+    clipWarning.setFont(customLnF.getFont());
     addAndMakeVisible(clipWarning);
 }
 
@@ -73,7 +78,7 @@ void GainAudioProcessorEditor::paint (juce::Graphics& g)
     g.fillAll (juce::Colour(0xFF222222));
 
     g.setColour(juce::Colour(textColour));
-    g.setFont(20.0f);
+    g.setFont(customLnF.getFont());
 
     if (peakDisplay == -100.0f) {
         peakLabel.setText("-Inf dB", juce::dontSendNotification);
@@ -88,31 +93,36 @@ void GainAudioProcessorEditor::paint (juce::Graphics& g)
         clipLEDBounds.getCentreY() - ledDiameter * 0.5f,
         ledDiameter, ledDiameter);
     bool ledOn;
+    int ledGlowLayers = 3;
+    float ledGlowAlpha = 0.3f;
+    float ledGlowArea = 2.0f;
 
-    if (audioProcessor.isClipping) {
-        ledOn = true;
-    }
-    else {
-        ledOn = false;
-    }
+    if (audioProcessor.isClipping) ledOn = true;
 
-    juce::Colour ledColour = ledOn ? juce::Colours::red : juce::Colours::darkgrey;
+    else ledOn = false;
+
+    juce::Colour ledColour = ledOn ? juce::Colour(0xFFE8702A) : juce::Colours::darkgrey;
 
     if (ledOn) {
-        // Glow layer
-        //g.setColour(ledColour.withAlpha(0.3f));
-        //g.fillEllipse(ledArea.expanded(4.0f));
-
         // Base layer
         g.setColour(ledColour);
         g.fillEllipse(ledArea);
 
         // Outline layer
         g.setColour(juce::Colour(0xFF222222));
-        g.drawEllipse(ledArea, 3.0f);
+        g.drawEllipse(ledArea, 5.0f);
 
         g.setColour(juce::Colours::darkgrey);
         g.drawEllipse(ledArea, 2.0f);
+
+        // Adding glow
+        for (int i = 0; i < ledGlowLayers; i++) {
+            g.setColour(ledColour.withAlpha(ledGlowAlpha));
+            g.fillEllipse(ledArea.expanded(ledGlowArea));
+
+            ledGlowAlpha -= 0.1f;
+            ledGlowArea += 3.0f;
+        }
     }
     else {
         // Base layer
@@ -121,7 +131,7 @@ void GainAudioProcessorEditor::paint (juce::Graphics& g)
 
         // Outline layer
         g.setColour(juce::Colour(0xFF222222));
-        g.drawEllipse(ledArea, 3.0f);
+        g.drawEllipse(ledArea, 5.0f);
 
         g.setColour(juce::Colours::darkgrey);
         g.drawEllipse(ledArea, 2.0f);
@@ -143,6 +153,6 @@ void GainAudioProcessorEditor::resized()
 
     gainSlider.setBounds(50, 50, 300, 325);
     peakHeader.setBounds(50, 390, 50, 20);
-    peakLabel.setBounds(50, 412, 50, 16);
+    peakLabel.setBounds(47, 414, 56, 17);
     clipWarning.setBounds(300, 390, 50, 35);
 }
