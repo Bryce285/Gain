@@ -16,7 +16,7 @@ GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
 
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 450);
+    setSize (400, 480);
     startTimer(25);
 
     gainSlider.setLookAndFeel(&customLnF);
@@ -77,6 +77,8 @@ void GainAudioProcessorEditor::paint (juce::Graphics& g)
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (juce::Colour(0xFF222222));
 
+    customLnF.drawPluginHeader(g, 400);
+
     g.setColour(juce::Colour(textColour));
     g.setFont(customLnF.getAudioParamsFont());
 
@@ -87,7 +89,7 @@ void GainAudioProcessorEditor::paint (juce::Graphics& g)
         peakLabel.setText(juce::String(peakDisplay, 2) + " dB", juce::dontSendNotification);
     }
 
-    auto clipLEDBounds = juce::Rectangle<float>(318, 414, 15, 15);
+    auto clipLEDBounds = juce::Rectangle<float>(318, 444, 15, 15);
     float ledDiameter = 15.0f;
     juce::Rectangle<float> ledArea(clipLEDBounds.getCentreX() - ledDiameter * 0.5f,
         clipLEDBounds.getCentreY() - ledDiameter * 0.5f,
@@ -151,8 +153,8 @@ void GainAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 
-    gainSlider.setBounds(50, 50, 300, 325);
-    peakHeader.setBounds(50, 390, 50, 20);
-    peakLabel.setBounds(45, 411, 60, 22);
-    clipWarning.setBounds(300, 390, 50, 35);
+    gainSlider.setBounds(50, 80, 300, 325);
+    peakHeader.setBounds(50, 420, 50, 20);
+    peakLabel.setBounds(45, 441, 60, 22);
+    clipWarning.setBounds(300, 420, 50, 35);
 }

@@ -15,7 +15,7 @@
 /**
 */
 
-// Create a custom look and feel which will be used for the gain slider
+// Create a custom look and feel for the GUI elements
 class CustomLnF : public juce::LookAndFeel_V4
 {
 public:
@@ -55,6 +55,15 @@ public:
         p.applyTransform(juce::AffineTransform::rotation(angle).translated(bounds.getCentreX(), bounds.getCentreY()));
         g.setColour(juce::Colour(0xFF0EA7B5));
         g.fillPath(p);
+    }
+
+    void drawPluginHeader(juce::Graphics& g, int editorWidth)
+    {
+        juce::Path headerRect;
+        int headerHeight = 40;
+        headerRect.addRectangle(0, 0, editorWidth, headerHeight);
+        g.setColour(juce::Colour(0xFF181818));
+        g.fillPath(headerRect);
     }
 
     CustomLnF()
