@@ -34,13 +34,13 @@ GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
     gainLabel.attachToComponent(&gainSlider, false);
     gainLabel.setJustificationType(juce::Justification::centred);
     gainLabel.setColour(juce::Label::textColourId, juce::Colour(textColour));
-    gainLabel.setFont(customLnF.getFont());
+    gainLabel.setFont(customLnF.getTitlesFont());
     addAndMakeVisible(gainLabel);
 
     peakHeader.setText("Peak", juce::dontSendNotification);
     peakHeader.setJustificationType(juce::Justification::centred);
     peakHeader.setColour(juce::Label::textColourId, juce::Colour(textColour));
-    peakHeader.setFont(customLnF.getFont());
+    peakHeader.setFont(customLnF.getTitlesFont());
     addAndMakeVisible(peakHeader);
 
     peakLabel.setText("-Inf dB", juce::dontSendNotification);
@@ -48,14 +48,14 @@ GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
     peakLabel.addMouseListener(this, true);
     peakLabel.setColour(juce::Label::textColourId, juce::Colour(textColour));
     peakLabel.setColour(juce::Label::backgroundColourId, juce::Colour(0xFF141414));
-    peakLabel.setFont(customLnF.getFont());
+    peakLabel.setFont(customLnF.getAudioParamsFont());
     addAndMakeVisible(peakLabel);
 
     clipWarning.setText("Clip", juce::dontSendNotification);
     clipWarning.setJustificationType(juce::Justification::centredTop);
     clipWarning.addMouseListener(this, true);
     clipWarning.setColour(juce::Label::textColourId, juce::Colour(textColour));
-    clipWarning.setFont(customLnF.getFont());
+    clipWarning.setFont(customLnF.getTitlesFont());
     addAndMakeVisible(clipWarning);
 }
 
@@ -78,7 +78,7 @@ void GainAudioProcessorEditor::paint (juce::Graphics& g)
     g.fillAll (juce::Colour(0xFF222222));
 
     g.setColour(juce::Colour(textColour));
-    g.setFont(customLnF.getFont());
+    g.setFont(customLnF.getAudioParamsFont());
 
     if (peakDisplay == -100.0f) {
         peakLabel.setText("-Inf dB", juce::dontSendNotification);
@@ -87,7 +87,7 @@ void GainAudioProcessorEditor::paint (juce::Graphics& g)
         peakLabel.setText(juce::String(peakDisplay, 2) + " dB", juce::dontSendNotification);
     }
 
-    auto clipLEDBounds = juce::Rectangle<float>(317, 414, 15, 15);
+    auto clipLEDBounds = juce::Rectangle<float>(318, 414, 15, 15);
     float ledDiameter = 15.0f;
     juce::Rectangle<float> ledArea(clipLEDBounds.getCentreX() - ledDiameter * 0.5f,
         clipLEDBounds.getCentreY() - ledDiameter * 0.5f,
@@ -153,6 +153,6 @@ void GainAudioProcessorEditor::resized()
 
     gainSlider.setBounds(50, 50, 300, 325);
     peakHeader.setBounds(50, 390, 50, 20);
-    peakLabel.setBounds(47, 414, 56, 17);
+    peakLabel.setBounds(45, 411, 60, 22);
     clipWarning.setBounds(300, 390, 50, 35);
 }

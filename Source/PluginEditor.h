@@ -43,36 +43,54 @@ public:
         g.setColour(juce::Colour(0xFF0EA7B5));
         g.strokePath(arc, juce::PathStrokeType(4.0f));
 
+        juce::Path innerCircle;
+        innerCircle.addEllipse(bounds.reduced(6));
+        g.setColour(juce::Colour(0xFF3B3B3B).withAlpha(0.7f));
+        g.strokePath(innerCircle, juce::PathStrokeType(4.0f));
+
         juce::Path p;
-        auto pointerLength = reducedRadius - 10;
+        auto pointerLength = reducedRadius - 65;
         auto pointerThickness = 4.0f;
-        p.addRectangle(-pointerThickness * 0.5f, -pointerLength, pointerThickness, pointerLength);
+        p.addRectangle(-pointerThickness * 0.5f, -pointerLength - 55, pointerThickness, pointerLength);
         p.applyTransform(juce::AffineTransform::rotation(angle).translated(bounds.getCentreX(), bounds.getCentreY()));
+        g.setColour(juce::Colour(0xFF0EA7B5));
         g.fillPath(p);
     }
 
     CustomLnF()
     {
-        juce::FontOptions typeface = juce::Typeface::createSystemTypefaceFor(
+        juce::FontOptions titlesFont = juce::Typeface::createSystemTypefaceFor(
             BinaryData::MoonGlossDisplayMedium_otf,
             BinaryData::MoonGlossDisplayMedium_otfSize
         );
 
-        moonGloss = juce::Font(typeface).withHeight(14.0f);
+        juce::FontOptions audioParamsFont = juce::Typeface::createSystemTypefaceFor(
+            BinaryData::ZF2334SquarishRegular_otf,
+            BinaryData::ZF2334SquarishRegular_otfSize
+        );
+
+        moonGloss = juce::Font(titlesFont).withHeight(14.0f);
+        squarish = juce::Font(audioParamsFont).withHeight(20.0f);
     }
 
     juce::Font getLabelFont(juce::Label& label) override
     {
-        return moonGloss;
+        return squarish;
     }
 
-    juce::Font getFont()
+    juce::Font getTitlesFont()
     {
         return moonGloss;
     }
 
+    juce::Font getAudioParamsFont()
+    {
+        return squarish;
+    }
+
 private:
     juce::Font moonGloss;
+    juce::Font squarish;
 };
 
 class GainAudioProcessorEditor : public juce::AudioProcessorEditor,
