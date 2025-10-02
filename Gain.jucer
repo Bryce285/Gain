@@ -4,8 +4,12 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
   <MAINGROUP id="C8qO7z" name="Gain">
     <GROUP id="{BAF66BA5-0EBE-B60D-4906-58024E785363}" name="Resources">
+      <FILE id="F8xTMd" name="Eightgon-Italic.ttf" compile="0" resource="1"
+            file="Resources/Eightgon-Italic.ttf"/>
       <FILE id="SIRBDj" name="MoonGlossDisplayMedium.otf" compile="0" resource="1"
             file="Resources/MoonGlossDisplayMedium.otf"/>
+      <FILE id="oUdD3M" name="Oxanium-Medium.ttf" compile="0" resource="1"
+            file="Resources/Oxanium-Medium.ttf"/>
       <FILE id="DdbI3W" name="ZF2334Squarish-Regular.otf" compile="0" resource="1"
             file="Resources/ZF2334Squarish-Regular.otf"/>
     </GROUP>

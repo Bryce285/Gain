@@ -57,6 +57,18 @@ GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
     clipWarning.setColour(juce::Label::textColourId, juce::Colour(textColour));
     clipWarning.setFont(customLnF.getTitlesFont());
     addAndMakeVisible(clipWarning);
+
+    gainLogo.setText("Gain", juce::dontSendNotification);
+    gainLogo.setJustificationType(juce::Justification::right);
+    gainLogo.setColour(juce::Label::textColourId, juce::Colour(textColour));
+    gainLogo.setFont(customLnF.getPluginLogoFont());
+    addAndMakeVisible(gainLogo);
+
+    OPPLogo.setText("Open Plugin Project", juce::dontSendNotification);
+    OPPLogo.setJustificationType(juce::Justification::left);
+    OPPLogo.setColour(juce::Label::textColourId, juce::Colour(textColour));
+    OPPLogo.setFont(customLnF.getOPPLogoFont());
+    addAndMakeVisible(OPPLogo);
 }
 
 GainAudioProcessorEditor::~GainAudioProcessorEditor()
@@ -152,6 +164,9 @@ void GainAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+
+    gainLogo.setBounds(345, 1, 50, 25);
+    OPPLogo.setBounds(2, 1, 200, 25);
 
     gainSlider.setBounds(50, 80, 300, 325);
     peakHeader.setBounds(50, 420, 50, 20);

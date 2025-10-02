@@ -40,7 +40,7 @@ public:
         juce::Path arc;
         auto angle = rotaryStartAngle + sliderPosProportional * (rotaryEndAngle - rotaryStartAngle);
         arc.addCentredArc(center.x, center.y, reducedRadius, reducedRadius, 0.0f, rotaryCenterAngle, angle, true);
-        g.setColour(juce::Colour(0xFF0EA7B5));
+        g.setColour(juce::Colour(pluginHighlightColour));
         g.strokePath(arc, juce::PathStrokeType(4.0f));
 
         juce::Path innerCircle;
@@ -53,17 +53,23 @@ public:
         auto pointerThickness = 4.0f;
         p.addRectangle(-pointerThickness * 0.5f, -pointerLength - 55, pointerThickness, pointerLength);
         p.applyTransform(juce::AffineTransform::rotation(angle).translated(bounds.getCentreX(), bounds.getCentreY()));
-        g.setColour(juce::Colour(0xFF0EA7B5));
+        g.setColour(juce::Colour(pluginHighlightColour));
         g.fillPath(p);
     }
 
     void drawPluginHeader(juce::Graphics& g, int editorWidth)
     {
         juce::Path headerRect;
-        int headerHeight = 40;
+        int headerHeight = 26;
         headerRect.addRectangle(0, 0, editorWidth, headerHeight);
         g.setColour(juce::Colour(0xFF181818));
         g.fillPath(headerRect);
+
+        juce::Path headerHighlightRect;
+        int headerHighlightHeight = 2;
+        headerHighlightRect.addRectangle(0, headerHeight, editorWidth, headerHighlightHeight);
+        g.setColour(juce::Colour(pluginHighlightColour));
+        g.fillPath(headerHighlightRect);
     }
 
     CustomLnF()
@@ -78,8 +84,20 @@ public:
             BinaryData::ZF2334SquarishRegular_otfSize
         );
 
+        juce::FontOptions gainLogoFont = juce::Typeface::createSystemTypefaceFor(
+            BinaryData::EightgonItalic_ttf,
+            BinaryData::EightgonItalic_ttfSize
+        );
+
+        juce::FontOptions OPPLogoFont = juce::Typeface::createSystemTypefaceFor(
+            BinaryData::OxaniumMedium_ttf,
+            BinaryData::OxaniumMedium_ttfSize
+        );
+
         moonGloss = juce::Font(titlesFont).withHeight(14.0f);
         squarish = juce::Font(audioParamsFont).withHeight(20.0f);
+        eightgon = juce::Font(gainLogoFont).withHeight(18.0f);
+        oxanium = juce::Font(OPPLogoFont).withHeight(16.0f);
     }
 
     juce::Font getLabelFont(juce::Label& label) override
@@ -97,9 +115,23 @@ public:
         return squarish;
     }
 
+    juce::Font getPluginLogoFont()
+    {
+        return eightgon;
+    }
+
+    juce::Font getOPPLogoFont()
+    {
+        return oxanium;
+    }
+
 private:
     juce::Font moonGloss;
     juce::Font squarish;
+    juce::Font eightgon;
+    juce::Font oxanium;
+
+    int pluginHighlightColour = 0xFF0EA7B5;
 };
 
 class GainAudioProcessorEditor : public juce::AudioProcessorEditor,
@@ -128,6 +160,9 @@ private:
     juce::Label peakHeader;
     juce::Label peakLabel;
     juce::Label clipWarning;
+
+    juce::Label gainLogo;
+    juce::Label OPPLogo;
 
     int textColour = 0xFFADB5BD;
 
