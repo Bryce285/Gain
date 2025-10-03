@@ -1,3 +1,0 @@
-Gain Plugin TODO:
-- Level meter
-- Create README
