@@ -1,5 +1,3 @@
 Gain Plugin TODO:
 - Level meter
 - Create README
-- Update plugin name and company name in JUCE project
-- Update repo name
