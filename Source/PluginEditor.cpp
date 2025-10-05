@@ -64,11 +64,11 @@ GainAudioProcessorEditor::GainAudioProcessorEditor (GainAudioProcessor& p)
     gainLogo.setFont(customLnF.getPluginLogoFont());
     addAndMakeVisible(gainLogo);
 
-    OPPLogo.setText("Open Plugin Project", juce::dontSendNotification);
-    OPPLogo.setJustificationType(juce::Justification::left);
-    OPPLogo.setColour(juce::Label::textColourId, juce::Colour(textColour));
-    OPPLogo.setFont(customLnF.getOPPLogoFont());
-    addAndMakeVisible(OPPLogo);
+    OPLogo.setText("OpenPlugins", juce::dontSendNotification);
+    OPLogo.setJustificationType(juce::Justification::left);
+    OPLogo.setColour(juce::Label::textColourId, juce::Colour(textColour));
+    OPLogo.setFont(customLnF.getOPLogoFont());
+    addAndMakeVisible(OPLogo);
 }
 
 GainAudioProcessorEditor::~GainAudioProcessorEditor()
@@ -166,7 +166,7 @@ void GainAudioProcessorEditor::resized()
     // subcomponents in your editor..
 
     gainLogo.setBounds(345, 1, 50, 25);
-    OPPLogo.setBounds(2, 1, 200, 25);
+    OPLogo.setBounds(2, 1, 200, 25);
 
     gainSlider.setBounds(50, 80, 300, 325);
     peakHeader.setBounds(50, 420, 50, 20);

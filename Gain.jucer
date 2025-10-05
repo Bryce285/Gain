@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="daBN2Y" name="Gain" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginManufacturer=" Open Plugin Project"
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginManufacturer="OpenPlugins"
               pluginName="OpenGain">
   <MAINGROUP id="C8qO7z" name="Gain">
     <GROUP id="{BAF66BA5-0EBE-B60D-4906-58024E785363}" name="Resources">

@@ -89,7 +89,7 @@ public:
             BinaryData::EightgonItalic_ttfSize
         );
 
-        juce::FontOptions OPPLogoFont = juce::Typeface::createSystemTypefaceFor(
+        juce::FontOptions OPLogoFont = juce::Typeface::createSystemTypefaceFor(
             BinaryData::OxaniumMedium_ttf,
             BinaryData::OxaniumMedium_ttfSize
         );
@@ -97,7 +97,7 @@ public:
         moonGloss = juce::Font(titlesFont).withHeight(14.0f);
         squarish = juce::Font(audioParamsFont).withHeight(20.0f);
         eightgon = juce::Font(gainLogoFont).withHeight(18.0f);
-        oxanium = juce::Font(OPPLogoFont).withHeight(16.0f);
+        oxanium = juce::Font(OPLogoFont).withHeight(16.0f);
     }
 
     juce::Font getLabelFont(juce::Label& label) override
@@ -120,7 +120,7 @@ public:
         return eightgon;
     }
 
-    juce::Font getOPPLogoFont()
+    juce::Font getOPLogoFont()
     {
         return oxanium;
     }
@@ -162,7 +162,7 @@ private:
     juce::Label clipWarning;
 
     juce::Label gainLogo;
-    juce::Label OPPLogo;
+    juce::Label OPLogo;
 
     int textColour = 0xFFADB5BD;
 
