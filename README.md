@@ -6,5 +6,5 @@ OpenGain is a simple, open-source gain plugin developed using the JUCE Framework
 </p>
 <br>
 
-# Usage
+## Usage
 To use this plugin, copy the vst3 file found in /Gain/VST3 to whatever folder your DAW scans for VST plugins. Then, when you scan for VST plugins in your DAW, OpenGain should pop up.
